@@ -2,7 +2,7 @@
 
 A personal spaced repetition dashboard for studying LeetCode problems. Built with React + TypeScript + Tailwind CSS. No backend — all data lives in your browser's `localStorage`.
 
-![Queue view with due problems, done today, and upcoming reviews]()
+![Queue view with due problems, done today, and upcoming reviews](assets/screenshot.png)
 
 ## Features
 
