@@ -10,9 +10,9 @@ interface Props {
 }
 
 const DIFFICULTY_COLORS = {
-  Easy: 'text-emerald-600 bg-emerald-50',
-  Medium: 'text-amber-600 bg-amber-50',
-  Hard: 'text-red-600 bg-red-50',
+  Easy: 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30 dark:text-emerald-400',
+  Medium: 'text-amber-600 bg-amber-50 dark:bg-amber-900/30 dark:text-amber-400',
+  Hard: 'text-red-600 bg-red-50 dark:bg-red-900/30 dark:text-red-400',
 }
 
 const STAGE_DOTS = [0, 1, 2, 3, 4]
@@ -28,18 +28,18 @@ export function ProblemCard({ problem, onSolved, onFailed, onMoveToBank, onDelet
       href={problem.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="font-semibold text-gray-900 hover:text-indigo-600 transition-colors"
+      className="font-semibold text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
     >
       {problem.leetcodeNumber ? `${problem.leetcodeNumber}. ` : ''}{problem.title}
     </a>
   ) : (
-    <span className="font-semibold text-gray-900">
+    <span className="font-semibold text-gray-900 dark:text-white">
       {problem.leetcodeNumber ? `${problem.leetcodeNumber}. ` : ''}{problem.title}
     </span>
   )
 
   return (
-    <div className={`bg-white rounded-xl border ${isOverdue ? 'border-red-200' : 'border-gray-200'} p-4 shadow-sm`}>
+    <div className={`bg-white dark:bg-gray-800 rounded-xl border ${isOverdue ? 'border-red-200 dark:border-red-800' : 'border-gray-200 dark:border-gray-700'} p-4 shadow-sm`}>
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
@@ -53,7 +53,7 @@ export function ProblemCard({ problem, onSolved, onFailed, onMoveToBank, onDelet
 
           {/* Stage progress dots */}
           <div className="flex items-center gap-1.5 mt-2">
-            <span className="text-xs text-gray-400 mr-1">Stage:</span>
+            <span className="text-xs text-gray-400 dark:text-gray-500 mr-1">Stage:</span>
             {STAGE_DOTS.map(i => {
               const isDone = i < problem.currentStage
               const isCurrent = i === problem.currentStage
@@ -65,26 +65,26 @@ export function ProblemCard({ problem, onSolved, onFailed, onMoveToBank, onDelet
                     isDone
                       ? 'bg-indigo-500'
                       : isCurrent
-                      ? 'bg-indigo-300 ring-2 ring-indigo-300 ring-offset-1'
-                      : 'bg-gray-200'
+                      ? 'bg-indigo-300 ring-2 ring-indigo-300 ring-offset-1 dark:ring-offset-gray-800'
+                      : 'bg-gray-200 dark:bg-gray-600'
                   }`}
                 />
               )
             })}
-            <span className="text-xs text-gray-500 ml-1">{STAGE_LABELS[problem.currentStage]}</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400 ml-1">{STAGE_LABELS[problem.currentStage]}</span>
           </div>
 
           {/* Due status + fail count */}
           <div className="mt-1 flex items-center gap-3">
             {isOverdue ? (
-              <span className="text-xs font-medium text-red-600">
+              <span className="text-xs font-medium text-red-600 dark:text-red-400">
                 {overdue === 1 ? '1 day overdue' : `${overdue} days overdue`}
               </span>
             ) : isDueToday ? (
-              <span className="text-xs font-medium text-indigo-600">Due today</span>
+              <span className="text-xs font-medium text-indigo-600 dark:text-indigo-400">Due today</span>
             ) : null}
             {failCount > 0 && (
-              <span className="text-xs text-red-400">{failCount} {failCount === 1 ? 'fail' : 'fails'}</span>
+              <span className="text-xs text-red-400 dark:text-red-500">{failCount} {failCount === 1 ? 'fail' : 'fails'}</span>
             )}
           </div>
         </div>
@@ -99,16 +99,15 @@ export function ProblemCard({ problem, onSolved, onFailed, onMoveToBank, onDelet
           </button>
           <button
             onClick={onFailed}
-            className="px-3 py-1.5 bg-red-100 text-red-700 text-xs font-medium rounded-lg hover:bg-red-200 transition-colors"
+            className="px-3 py-1.5 bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-400 text-xs font-medium rounded-lg hover:bg-red-200 dark:hover:bg-red-900/60 transition-colors"
           >
             Failed
           </button>
           <button
             onClick={onMoveToBank}
-            className="p-1.5 text-gray-300 hover:text-amber-500 transition-colors"
+            className="p-1.5 text-gray-300 dark:text-gray-600 hover:text-amber-500 dark:hover:text-amber-400 transition-colors"
             title="Move to Bank"
           >
-            {/* inbox/archive icon */}
             <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
               <path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z" />
               <path fillRule="evenodd" d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" clipRule="evenodd" />
@@ -116,7 +115,7 @@ export function ProblemCard({ problem, onSolved, onFailed, onMoveToBank, onDelet
           </button>
           <button
             onClick={onDelete}
-            className="p-1.5 text-gray-300 hover:text-gray-500 transition-colors"
+            className="p-1.5 text-gray-300 dark:text-gray-600 hover:text-gray-500 dark:hover:text-gray-400 transition-colors"
             title="Delete"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">

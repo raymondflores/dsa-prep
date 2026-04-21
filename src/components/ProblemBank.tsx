@@ -10,9 +10,9 @@ interface Props {
 }
 
 const DIFFICULTY_COLORS = {
-  Easy: 'text-emerald-600 bg-emerald-50',
-  Medium: 'text-amber-600 bg-amber-50',
-  Hard: 'text-red-600 bg-red-50',
+  Easy: 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30 dark:text-emerald-400',
+  Medium: 'text-amber-600 bg-amber-50 dark:bg-amber-900/30 dark:text-amber-400',
+  Hard: 'text-red-600 bg-red-50 dark:bg-red-900/30 dark:text-red-400',
 }
 
 const DIFFICULTIES: Array<Difficulty | 'All'> = ['All', 'Easy', 'Medium', 'Hard']
@@ -24,7 +24,6 @@ export function ProblemBank({ problems, onAddToQueue, onDelete, onBulkImport }: 
   const bank = problems.filter(p => p.status === 'backlog')
   const filtered = filter === 'All' ? bank : bank.filter(p => p.difficulty === filter)
 
-  // Sort by LC number, then title
   const sorted = [...filtered].sort((a, b) => {
     if (a.leetcodeNumber && b.leetcodeNumber) return a.leetcodeNumber - b.leetcodeNumber
     if (a.leetcodeNumber) return -1
@@ -44,7 +43,7 @@ export function ProblemBank({ problems, onAddToQueue, onDelete, onBulkImport }: 
               className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
                 filter === d
                   ? 'bg-indigo-600 text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
               }`}
             >
               {d}
@@ -58,7 +57,7 @@ export function ProblemBank({ problems, onAddToQueue, onDelete, onBulkImport }: 
         </div>
         <button
           onClick={() => setShowBulkImport(true)}
-          className="flex items-center gap-1.5 text-sm font-medium text-indigo-600 hover:text-indigo-800 transition-colors"
+          className="flex items-center gap-1.5 text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 transition-colors"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
             <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
@@ -68,20 +67,20 @@ export function ProblemBank({ problems, onAddToQueue, onDelete, onBulkImport }: 
       </div>
 
       {bank.length === 0 ? (
-        <div className="text-center py-16 text-gray-400">
+        <div className="text-center py-16 text-gray-400 dark:text-gray-500">
           <p className="text-5xl mb-4">📚</p>
           <p className="text-lg font-medium">Your bank is empty</p>
           <p className="text-sm mt-1">Bulk import a list or add problems one by one</p>
         </div>
       ) : filtered.length === 0 ? (
-        <div className="text-center py-10 text-gray-400 text-sm">
+        <div className="text-center py-10 text-gray-400 dark:text-gray-500 text-sm">
           No {filter} problems in the bank
         </div>
       ) : (
-        <div className="divide-y divide-gray-100 border border-gray-200 rounded-xl overflow-hidden">
+        <div className="divide-y divide-gray-100 dark:divide-gray-700 border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
           {sorted.map(p => (
-            <div key={p.id} className="flex items-center gap-3 px-4 py-3 bg-white hover:bg-gray-50 transition-colors">
-              <span className="text-xs text-gray-400 w-8 shrink-0 text-right">
+            <div key={p.id} className="flex items-center gap-3 px-4 py-3 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors">
+              <span className="text-xs text-gray-400 dark:text-gray-500 w-8 shrink-0 text-right">
                 {p.leetcodeNumber ?? '—'}
               </span>
               <div className="flex-1 min-w-0 flex items-center gap-2">
@@ -90,12 +89,12 @@ export function ProblemBank({ problems, onAddToQueue, onDelete, onBulkImport }: 
                     href={p.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm font-medium text-gray-800 hover:text-indigo-600 truncate transition-colors"
+                    className="text-sm font-medium text-gray-800 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 truncate transition-colors"
                   >
                     {p.title}
                   </a>
                 ) : (
-                  <span className="text-sm font-medium text-gray-800 truncate">{p.title}</span>
+                  <span className="text-sm font-medium text-gray-800 dark:text-gray-200 truncate">{p.title}</span>
                 )}
                 {p.difficulty && (
                   <span className={`text-xs font-medium px-1.5 py-0.5 rounded-full shrink-0 ${DIFFICULTY_COLORS[p.difficulty]}`}>
@@ -106,13 +105,13 @@ export function ProblemBank({ problems, onAddToQueue, onDelete, onBulkImport }: 
               <div className="flex items-center gap-1 shrink-0">
                 <button
                   onClick={() => onAddToQueue(p.id)}
-                  className="px-2.5 py-1 bg-indigo-50 text-indigo-700 text-xs font-medium rounded-lg hover:bg-indigo-100 transition-colors"
+                  className="px-2.5 py-1 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 text-xs font-medium rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-900/50 transition-colors"
                 >
                   Add to Queue
                 </button>
                 <button
                   onClick={() => onDelete(p.id)}
-                  className="p-1.5 text-gray-300 hover:text-gray-500 transition-colors"
+                  className="p-1.5 text-gray-300 dark:text-gray-600 hover:text-gray-500 dark:hover:text-gray-400 transition-colors"
                   title="Delete"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
